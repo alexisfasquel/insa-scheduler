@@ -3,6 +3,6 @@
 
 #include "process.h"
 
-void  __attribute__((naked)) ctx_switch();
+void  __attribute__((naked)) ctx_switch(); //Change de contexte
 
 #endif
