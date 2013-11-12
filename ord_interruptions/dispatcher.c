@@ -3,8 +3,6 @@
 #include "sched.h"
 #include "hw.h"
 
-//Push registre dans la pile de current_pcb
-
 void __attribute__((naked)) ctx_switch() 
 {
 

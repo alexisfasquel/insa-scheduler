@@ -18,11 +18,11 @@ void
 funcA()
 {
 	int cptA = 0;
-	sem_down(sem);
+	sem_down(sem); //Retire un ticket, et est donc bloqué (vu que sem initialisé à 0)
 	
 	while ( 1 ) 
 	{
-		cptA ++;
+		cptA ++; //tourne en boucle en attendant interruption qui change de contexte
 	}
 }
 
@@ -30,10 +30,10 @@ void
 funcB()
 {
 	int cptB = 1;
-	sem_up(sem);
+	sem_up(sem); //Ajoute un ticket et débloque pcbA
 	while ( 1 ) 
 	{
-		cptB += 2 ;
+		cptB += 2 ;//tourne en boucle en attendant interruption qui change de contexte
 	}
 }
 
@@ -41,14 +41,14 @@ funcB()
 int
 notmain ( void )
 {
+	//On cree les deux processus
 	create_process(STACK_SIZE,funcA, NULL);
-	create_process(STACK_SIZE,funcB, NULL);
+	create_process(STACK_SIZE,funcB, NULL);	
 	
-	current_pcb=&pcb_init;
-	
-	
+	//initialise le sémaphore
 	sem_init( sem, 0);
 	
+	//On lance l'ordonnanceur	
 	start_sched();
 	
 	/* Pas atteignable vues nos 2 fonctions */

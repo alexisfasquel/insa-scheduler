@@ -3,12 +3,13 @@
 
 #include "process.h"
 
-void create_process(int stack_size, func_t f, void* args);
+void create_process(int stack_size, func_t f, void* args); //Cree un processus et le rajoute dans la liste des processus ready
 void start_current_process();
-void start_sched();
-void sched();
+void start_sched(); //On utilise un processus inutile au début pour qu'on ait un current_pcb avant de commencer
+void sched();//Supprimer les processus terminés, et choisit le processus suivant
+
 
 struct pcb_s* next_running; //prochain processus à executer
-struct pcb_s* useless_pcb; 
+struct pcb_s* useless_pcb; // processus inutile au début pour qu'on ait un current_pcb avant de commencer 
 
 #endif

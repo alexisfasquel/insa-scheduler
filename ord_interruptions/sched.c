@@ -6,8 +6,8 @@
 #define STACK_SIZE 12800
 #define NULL 0
 
-struct pcb_s* head=NULL;
-struct pcb_s* current_pcb;
+struct pcb_s* head=NULL; //Tête de la liste des processus ready
+struct pcb_s* current_pcb; // Processus courant
 
 void create_process(int stack_size,func_t f, void* args)
 //Cree un processus et le rajoute dans la liste des processus ready
@@ -29,7 +29,8 @@ void create_process(int stack_size,func_t f, void* args)
 		newpcb->next=current_pcb->next;
 		current_pcb->next = newpcb;
 	}
-	current_pcb=newpcb;}
+	current_pcb=newpcb;
+}
 
 
 

@@ -11,6 +11,7 @@ init_pcb(struct pcb_s* pcb, unsigned int stack_size)
 
 
 void sem_init(struct sem_s* sem, unsigned int val)
+//initialise le sémaphore
 {
 
 	sem->compteur = val;
@@ -18,8 +19,9 @@ void sem_init(struct sem_s* sem, unsigned int val)
 }
 
 void sem_up(struct sem_s* sem)
+//Ajoute un ticket au sémaphore et débloque un processus bloqué (si il y en a)
 {
-	sem->compteur += 1;
+	sem->compteur += 1; 
 
 	if (sem->compteur <= 0 ) //Si on débloque qqun, on le remet dans la liste des pcb ready
 	{
@@ -41,6 +43,7 @@ void sem_up(struct sem_s* sem)
 }
 
 void sem_down(struct sem_s* sem)
+//Retire un ticket au sémaphore et bloque le processus appelant si il n'y avait pas assez de ticket
 {
 	sem->compteur -= 1;
 
@@ -51,7 +54,7 @@ void sem_down(struct sem_s* sem)
 
 		struct pcb_s* temp=current_pcb;
 
-		while(temp->next != current_pcb)
+		while(temp->next != current_pcb) // cherche le pcb précédent le current
 		{
 			temp=temp->next;
 		}
@@ -65,7 +68,7 @@ void sem_down(struct sem_s* sem)
 
 		current_pcb=temp;
 
-		ctx_switch();
+		ctx_switch(); //et vu que le current a été bloqué, on passe au suivant
 
 	}
 
