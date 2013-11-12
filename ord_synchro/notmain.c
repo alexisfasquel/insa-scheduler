@@ -11,7 +11,7 @@ struct pcb_s pcb_A;
 struct pcb_s pcb_B;
 struct pcb_s pcb_init;
 
-struct sem_s mutex, vide, plein;
+struct sem_s* sem;
 
 
 void

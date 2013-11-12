@@ -1,4 +1,5 @@
 #include "process.h"
+#include "dispatcher.h"
 
 void
 init_pcb(struct pcb_s* pcb, unsigned int stack_size)
