@@ -23,14 +23,15 @@ void __attribute__((naked)) ctx_switch()
 	__asm("cps #0x13");
 	
 	
-	__asm("push {r0-r12,lr}");
-	__asm("mov %0, sp" : "=r"(current_pcb->sp));
+	__asm("push {r0-r12,lr}");//On sauvegarde les registres et lr
+	__asm("mov %0, sp" : "=r"(current_pcb->sp));//pour sauvegarder le registre sp dans le sp du processus courant
+
 	
-	sched();
+	sched();//On choisit le contexte suivant
 	
 	current_pcb=next_running;
 	
-	__asm("mov sp, %0" : : "r"(current_pcb->sp));
+	__asm("mov sp, %0" : : "r"(current_pcb->sp));//charge le sp du nouveau processus dans le registre sp
 	
 	//on ré-arme le timer
 	set_next_tick_and_enable_timer_irq();
@@ -38,17 +39,18 @@ void __attribute__((naked)) ctx_switch()
 	//on autorise à nouveau les interruptions
 	ENABLE_IRQ();
 	
-	if (current_pcb->etat == NEW)
+	if (current_pcb->etat == NEW) //Si on lance le processus pour la première fois
 	{
-		start_current_process();
+		start_current_process(); //On le lance normalement
 	}
 	else
-	{		
+	{	
+		//Sinon on récupère son contexte précédent	
 		__asm("pop {r0-r12,lr}"); 
 		__asm("rfefd sp!"); 	
 	}
 	
-	__asm("bx lr");
+	__asm("bx lr"); // = return 
 
 }
 

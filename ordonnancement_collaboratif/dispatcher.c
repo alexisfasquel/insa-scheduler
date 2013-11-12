@@ -11,7 +11,7 @@ void __attribute__((naked)) ctx_switch()
 	__asm("mov %0, sp" : "=r"(current_pcb->sp)); //pour sauvegarder le registre sp dans le sp du processus courant
 	sched(); //On choisit le contexte suivant
 	current_pcb=next_running; 
-	__asm("mov sp, %0" : : "r"(current_pcb->sp)); //charge le sp du processus dans le registre sp
+	__asm("mov sp, %0" : : "r"(current_pcb->sp)); //charge le sp du nouveau processus dans le registre sp
 
 	if (current_pcb->etat == NEW) //Si on lance le processus pour la première fois
 	{

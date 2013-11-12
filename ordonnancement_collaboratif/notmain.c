@@ -13,7 +13,7 @@ funcA()
 	while ( 1 ) 
 	{
 		cptA ++;
-		ctx_switch();
+		ctx_switch(); // on change de contexte
 	}
 }
 
@@ -25,7 +25,7 @@ funcB()
 	while ( 1 ) 
 	{
 		cptB += 2 ;
-		ctx_switch();
+		ctx_switch(); // on change de contexte
 	}
 }
 

@@ -5,17 +5,13 @@
 #define STACK_SIZE 128
 #define NULL 0
 
-struct pcb_s pcb_A;
-struct pcb_s pcb_B;
-struct pcb_s pcb_init;
-
 void
 funcA()
 {
 	int cptA = 0;
 	
 	while ( 1 ) {
-		cptA ++;
+		cptA ++; //tourne en boucle en attendant interruption qui change de contexte
 	}
 }
 
@@ -25,7 +21,7 @@ funcB()
 	int cptB = 1;
 	
 	while ( 1 ) {
-		cptB += 2 ;
+		cptB += 2 ;//tourne en boucle en attendant interruption qui change de contexte
 	}
 }
 
@@ -33,11 +29,11 @@ funcB()
 int
 notmain ( void )
 {
+	//On cree les deux processus
 	create_process(STACK_SIZE,funcA, NULL);
 	create_process(STACK_SIZE,funcB, NULL);
 	
-	current_pcb=&pcb_init;
-	
+	//On lance l'ordonnanceur	
 	start_sched();
 	
 	/* Pas atteignable vues nos 2 fonctions */
