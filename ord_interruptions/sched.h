@@ -4,7 +4,7 @@
 #include "process.h"
 
 void create_process(int stack_size, func_t f, void* args);
-void yield();
+
 void start_current_process();
 void start_sched();
 void sched();

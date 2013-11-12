@@ -7,7 +7,8 @@ typedef enum {NEW, READY, RUNNING, WAITING, TERMINATED} state;
 
 typedef void (*func_t) ( void);
 
-struct pcb_s {
+struct pcb_s 
+{
 
 	uint32_t* sp;
 
@@ -23,7 +24,8 @@ struct pcb_s {
 };
 
 //Struture semaphore
-struct sem_s {
+struct sem_s 
+{
 	
 	int compteur;
 	struct pcb_s* blocked_pcb;

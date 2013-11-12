@@ -7,7 +7,8 @@ typedef enum {NEW, READY, RUNNING, WAITING, TERMINATED} state;
 
 typedef void (*func_t) ( void);
 
-struct pcb_s {
+struct pcb_s 
+{
 
 	uint32_t* sp;
 
