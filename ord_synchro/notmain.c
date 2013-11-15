@@ -7,10 +7,6 @@
 #define STACK_SIZE 128
 #define NULL 0
 
-struct pcb_s pcb_A;
-struct pcb_s pcb_B;
-struct pcb_s pcb_init;
-
 struct sem_s* sem;
 
 
