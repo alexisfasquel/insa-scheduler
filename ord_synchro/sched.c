@@ -42,11 +42,12 @@ void start_sched()
 	useless_pcb->sp = useless_pcb->stack_begin + STACK_SIZE - 1;
 	useless_pcb->next=head;
 	current_pcb=useless_pcb;
+	ctx_switch();
 	
-	init_hw(); // On initialise le timer
-	ENABLE_IRQ(); // On autorise les interruptions (sinon elles ne fonctionnent pas)
+	//init_hw(); // On initialise le timer
+	//ENABLE_IRQ(); // On autorise les interruptions (sinon elles ne fonctionnent pas)
 	
-	while(1) // On laisse du temps au prog pour déclencher les interruptions, sinon le prog se terminerait
+	//while(1) // On laisse du temps au prog pour déclencher les interruptions, sinon le prog se terminerait
 	{
 	}
 
@@ -67,7 +68,8 @@ void sched()
 	}
 	
 	//Si le processus suivant dans la pile est ready, on le choisit comme étant le suivant à être exécuté
-	next_running=current_pcb->next;}
+	next_running=current_pcb->next;
+}
 
 void start_current_process()
 {

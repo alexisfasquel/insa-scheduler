@@ -23,23 +23,10 @@ struct pcb_s //Structure d'un processus
 	
 };
 
-//Struture semaphore
-struct sem_s 
-{
-	
-	int compteur;
-	struct pcb_s* blocked_pcb;
-};
-
 extern struct pcb_s* current_pcb; //processus courant
 extern struct pcb_s* head;//tête de la liste des processus ready
 
 void init_pcb(struct pcb_s* pcb, unsigned int stack_size); //Alloue la place nécessaire pour la pile du processus
-
-void sem_init(struct sem_s* sem, unsigned int val); //Initialise le sémaphore
-
-void sem_up(struct sem_s* sem); //Ajoute un ticket au sémaphore et débloque un processus bloqué (si il y en a)
-void sem_down(struct sem_s* sem); //Retire un ticket au sémaphore et bloque le processus appelant si il n'y avait pas assez de ticket
 
 #endif
 

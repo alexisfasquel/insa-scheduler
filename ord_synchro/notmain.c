@@ -3,38 +3,41 @@
 #include "process.h"
 #include "dispatcher.h"
 #include "sched.h"
+#include "semaphore.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define STACK_SIZE 128
 #define NULL 0
 
-struct pcb_s pcb_A;
-struct pcb_s pcb_B;
-struct pcb_s pcb_init;
 
 struct sem_s* sem;
+struct mtx_s* mtx;
+uint32_t shared_cpt;
 
 
 void
 funcA()
 {
 	int cptA = 0;
-	sem_down(sem); //Retire un ticket, et est donc bloqué (vu que sem initialisé à 0)
 	
-	while ( 1 ) 
-	{
-		cptA ++; //tourne en boucle en attendant interruption qui change de contexte
-	}
+	
+	mtx_lock(mtx);
+	shared_cpt++;
+	ctx_switch();
+	mtx_unlock(mtx);
+	ctx_switch();
 }
 
 void
 funcB()
 {
 	int cptB = 1;
-	sem_up(sem); //Ajoute un ticket et débloque pcbA
-	while ( 1 ) 
-	{
-		cptB += 2 ;//tourne en boucle en attendant interruption qui change de contexte
-	}
+
+	mtx_lock(mtx);
+	shared_cpt++;
+	mtx_unlock(mtx);
 }
 
 //------------------------------------------------------------------------
@@ -46,7 +49,7 @@ notmain ( void )
 	create_process(STACK_SIZE,funcB, NULL);	
 	
 	//initialise le sémaphore
-	sem_init( sem, 0);
+	mtx_init(mtx);
 	
 	//On lance l'ordonnanceur	
 	start_sched();
