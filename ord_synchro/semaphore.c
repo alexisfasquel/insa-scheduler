@@ -125,14 +125,14 @@ void mtx_unlock(struct mtx_s* mutex) {
 }
 
 
-void philosophe(int i) //A REVOIR : Principe de l'algo du philosophe, en c++ ici
-//d'après cours de Maranzana de l'année dernière
+void philosophe(int i) //A REVOIR : Principe de l'algo du philosophe
+//d'après cours de c++ de Maranzana de l'année dernière
 {
 	for ( ; ; )
 	{
 		penser();
 		mtx_lock(mtx); //protection du code
-		prendreFourchette(i);
+		prendreFourchette(i); // -> sémaphore?
 		prendreFourchette( (i-1)? i-1 : MAX);
 		manger();
 		poserFourchette(i);
