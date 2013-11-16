@@ -11,7 +11,10 @@
 #define STACK_SIZE 128
 #define NULL 0
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdc252333742d91ca1a2d7f18d78ed7ed14291d5
 struct sem_s* sem;
 struct mtx_s* mtx;
 uint32_t shared_cpt;
