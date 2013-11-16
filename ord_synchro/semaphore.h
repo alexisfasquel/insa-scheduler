@@ -21,3 +21,5 @@ void sem_down(struct sem_s* sem); //Retire un ticket au sémaphore et bloque le 
 void mtx_init(struct mtx_s* mutex);
 void mtx_lock(struct mtx_s* mutex);
 void mtx_unlock(struct mtx_s* mutex);
+
+void philosophe(int i); //incomplet
