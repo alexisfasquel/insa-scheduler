@@ -1,3 +1,6 @@
+#ifndef __SEMAPHORE_H
+#define __SEMAPHORE_H
+
 //Struture semaphore
 struct sem_s 
 {
@@ -22,4 +25,6 @@ void mtx_init(struct mtx_s* mutex);
 void mtx_lock(struct mtx_s* mutex);
 void mtx_unlock(struct mtx_s* mutex);
 
-void philosophe(int i); //incomplet
+
+#endif
+

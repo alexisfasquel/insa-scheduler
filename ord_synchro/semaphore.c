@@ -102,6 +102,7 @@ void mtx_lock(struct mtx_s* mutex) {
 		ctx_switch(); //et vu que le current a été bloqué, on passe au suivant
 	}
 }
+
 void mtx_unlock(struct mtx_s* mutex) {
 
 	if(mutex->owner_pcb == current_pcb) {
@@ -125,21 +126,9 @@ void mtx_unlock(struct mtx_s* mutex) {
 }
 
 
-void philosophe(int i) //A REVOIR : Principe de l'algo du philosophe
-//d'après cours de c++ de Maranzana de l'année dernière
-{
-	for ( ; ; )
-	{
-		penser();
-		mtx_lock(mtx); //protection du code
-		prendreFourchette(i); // -> sémaphore?
-		prendreFourchette( (i-1)? i-1 : MAX);
-		manger();
-		poserFourchette(i);
-		poserFourchette((i-1) ? i-1 : MAX);
-		mtx_unlock(mtx);
-	}
-}
+
+
+
 
 
 

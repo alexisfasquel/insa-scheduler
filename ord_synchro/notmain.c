@@ -4,6 +4,8 @@
 #include "dispatcher.h"
 #include "sched.h"
 #include "semaphore.h"
+#include "philosophe.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,9 +21,6 @@ uint32_t shared_cpt;
 void
 funcA()
 {
-	int cptA = 0;
-	
-	
 	mtx_lock(mtx);
 	shared_cpt++;
 	ctx_switch();
@@ -32,8 +31,6 @@ funcA()
 void
 funcB()
 {
-	int cptB = 1;
-
 	mtx_lock(mtx);
 	shared_cpt++;
 	mtx_unlock(mtx);
@@ -44,11 +41,21 @@ int
 notmain ( void )
 {
 	//On cree les deux processus
-	create_process(STACK_SIZE,funcA, NULL);
-	create_process(STACK_SIZE,funcB, NULL);	
+	//create_process(STACK_SIZE,funcA, NULL);
+	//create_process(STACK_SIZE,funcB, NULL);	
+	
+	//On cree nos 5 philosophes
+	create_process(STACK_SIZE,philosophe, (int) 1);
+	create_process(STACK_SIZE,philosophe, (int) 2);
+	create_process(STACK_SIZE,philosophe, (int) 3);
+	create_process(STACK_SIZE,philosophe, (int) 4);
+	create_process(STACK_SIZE,philosophe, (int) 5);
+	
+	//On initialise nos mutex
+	philo_init();
 	
 	//initialise le sémaphore
-	mtx_init(mtx);
+	//mtx_init(mtx);
 	
 	//On lance l'ordonnanceur	
 	start_sched();
