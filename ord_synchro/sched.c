@@ -4,7 +4,7 @@
 #include "hw.h"
 
 #define STACK_SIZE 12800
-#define NULL 0
+
 
 struct pcb_s* head=NULL; //Tête de la liste des processus ready
 struct pcb_s* current_pcb; // Processus courant
@@ -42,12 +42,11 @@ void start_sched()
 	useless_pcb->sp = useless_pcb->stack_begin + STACK_SIZE - 1;
 	useless_pcb->next=head;
 	current_pcb=useless_pcb;
-	ctx_switch();
 	
-	//init_hw(); // On initialise le timer
-	//ENABLE_IRQ(); // On autorise les interruptions (sinon elles ne fonctionnent pas)
+	init_hw(); // On initialise le timer
+	ENABLE_IRQ(); // On autorise les interruptions (sinon elles ne fonctionnent pas)
 	
-	//while(1) // On laisse du temps au prog pour déclencher les interruptions, sinon le prog se terminerait
+	while(1) // On laisse du temps au prog pour déclencher les interruptions, sinon le prog se terminerait
 	{
 	}
 
@@ -77,6 +76,6 @@ void start_current_process()
 	current_pcb->etat= READY;
 	current_pcb->f();
 	current_pcb->etat= TERMINATED;
-	ctx_switch();
+	yield(NULL);
 
 }

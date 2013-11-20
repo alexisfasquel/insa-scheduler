@@ -11,7 +11,7 @@ struct mtx_s* fourchette4;
 struct mtx_s* fourchette5;
 
 void philo_init(); // initialise nos mutex
-void philosophe(int i); //Actions du philosophe i
+void philosophe(void* j); //Actions du philosophe i
 void prendreFourchette(int i);
 void poserFourchette(int i);
 void penser();

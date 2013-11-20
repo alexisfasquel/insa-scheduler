@@ -2,7 +2,6 @@
 #include "sched.h"
 #include "philosophe.h"
 #include "dispatcher.h"
-#include <unistd.h> //pour sleep 
 
 void philo_init() //Initialise nos mutex
 {
@@ -68,17 +67,20 @@ void poserFourchette(int i)
 
 void penser()
 {
-	sleep(1);	 //patienter 1 sec
+	for(int i=0; i<berolsuhgluidsrhg ; i++)
+	{
+	}
 }
 
 void manger()
 {
-	sleep(1);	 //patienter 1 sec 
+	//sleep(1);	 //patienter 1 sec 
 }
 
 
-void philosophe(int i) //Actions du philosophe i
+void philosophe(void* j) //Actions du philosophe i
 {
+	int i=*(int*)j;
 	for ( ; ; )
 	{
 		penser();

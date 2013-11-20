@@ -10,31 +10,37 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+
+
 #define STACK_SIZE 128
-#define NULL 0
 
-struct sem_s* sem;
 struct mtx_s* mtx;
-uint32_t shared_cpt;
-
 
 void
 funcA()
 {
+
 	mtx_lock(mtx);
-	shared_cpt++;
-	ctx_switch();
+	yield(0);
 	mtx_unlock(mtx);
-	ctx_switch();
+	
+	while(1)
+	{
+	}
 }
 
 void
 funcB()
 {
+	int i =0;
 	mtx_lock(mtx);
-	shared_cpt++;
-	mtx_unlock(mtx);
+	i++;
+	while(1)
+	{
+	}
 }
+
 
 //------------------------------------------------------------------------
 int
@@ -43,19 +49,21 @@ notmain ( void )
 	//On cree les deux processus
 	//create_process(STACK_SIZE,funcA, NULL);
 	//create_process(STACK_SIZE,funcB, NULL);	
-	
+
+
 	//On cree nos 5 philosophes
-	create_process(STACK_SIZE,philosophe, (int) 1);
-	create_process(STACK_SIZE,philosophe, (int) 2);
-	create_process(STACK_SIZE,philosophe, (int) 3);
-	create_process(STACK_SIZE,philosophe, (int) 4);
-	create_process(STACK_SIZE,philosophe, (int) 5);
+	create_process(STACK_SIZE,philosophe, (void *) 1);
+	create_process(STACK_SIZE,philosophe, (void *) 2);
+	create_process(STACK_SIZE,philosophe, (void *) 3);
+	create_process(STACK_SIZE,philosophe, (void *) 4);
+	create_process(STACK_SIZE,philosophe, (void *) 5);
 	
 	//On initialise nos mutex
 	philo_init();
 	
-	//initialise le sémaphore
+	//initialise le mtx
 	//mtx_init(mtx);
+
 	
 	//On lance l'ordonnanceur	
 	start_sched();
