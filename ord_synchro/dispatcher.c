@@ -38,20 +38,22 @@ void __attribute__((naked)) ctx_switch()
 
 	if (current_pcb->etat == NEW) //Si on lance le processus pour la première fois
 	{
+		ENABLE_IRQ();
 		start_current_process(); //On le lance normalement
+		
 	}
 	else
 	{	
 		//Sinon on récupère son contexte précédent	
-		__asm("pop {r0-r12,lr}"); 
-		
+		__asm("pop {r0-r12,lr}");
 	}
 
-	
+	ENABLE_IRQ();// on réactive les interruptions
+
 	__asm("rfefd sp!"); 	/* Jump to elected task, popping cpsr and pc from SVC stack  */
 	/* No need to explicitly enable IRQs as 'rfe' restore cpsr */	
 
-
+	
 }
 
 void __attribute__((naked)) yield(struct pcb_s* pcb_next) 
@@ -79,6 +81,7 @@ void __attribute__((naked)) yield(struct pcb_s* pcb_next)
 
 	if (current_pcb->etat == NEW) //Si on lance le processus pour la première fois
 	{
+		ENABLE_IRQ()
 		start_current_process(); //On le lance normalement
 	}
 	else

@@ -5,7 +5,7 @@
 
 typedef enum {NEW, READY, RUNNING, WAITING, TERMINATED} state; //Etat d'un processus
 
-typedef void (*func_t) ( void);
+typedef void (func_t) ( void*);
 
 struct pcb_s //Structure d'un processus
 {
@@ -14,7 +14,7 @@ struct pcb_s //Structure d'un processus
 
 	uint32_t* stack_begin; // Pointeur sur le début de la pile du processus (nécessaire pour la suppression)
 	
-	func_t f; //Fonction du processus
+	func_t* f; //Fonction du processus
 	void * args; //Arguments de la fonction du processus
 	
 	struct pcb_s* next; //Processus suivant

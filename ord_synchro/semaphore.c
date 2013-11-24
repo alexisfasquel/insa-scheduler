@@ -120,6 +120,7 @@ void mtx_lock(struct mtx_s* mutex)
 void mtx_unlock(struct mtx_s* mutex)
 {
 	DISABLE_IRQ(); //on arrête les interruptions 
+
 	if(mutex->owner_pcb == current_pcb) {
 		
 		mutex->compteur += 1;
@@ -138,6 +139,7 @@ void mtx_unlock(struct mtx_s* mutex)
 		
 		mutex->blocked_pcb = pcb_blocked_next;
 	}
+
 	ENABLE_IRQ();// on réactive les interruptions
 }
 

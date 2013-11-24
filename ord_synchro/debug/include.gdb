@@ -1,3 +1,20 @@
+define ppcb
+  print *((struct pcb_s*) $0)
+end
+
+define ppl
+  set $gdbhead = head
+  set $cur_pcb = head
+
+  ppcb $cur_pcb
+  set $cur_pcb = $cur_pcb->next
+
+  while ($cur_pcb != $gdbhead)
+    ppcb $cur_pcb
+    set $cur_pcb = $cur_pcb->next
+  end    
+end
+
 
 define pirqs
   set $stack_size = 15

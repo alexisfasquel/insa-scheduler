@@ -67,20 +67,26 @@ void poserFourchette(int i)
 
 void penser()
 {
-	for(int i=0; i<berolsuhgluidsrhg ; i++)
+	int i;
+
+	for(i=0; i<1000000 ; i++)
 	{
 	}
 }
 
 void manger()
 {
-	//sleep(1);	 //patienter 1 sec 
+	int i;
+
+	for(i=0; i<1000000 ; i++)
+	{
+	}
 }
 
 
 void philosophe(void* j) //Actions du philosophe i
 {
-	int i=*(int*)j;
+	int i = (int) j;
 	for ( ; ; )
 	{
 		penser();

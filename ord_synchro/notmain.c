@@ -47,8 +47,8 @@ int
 notmain ( void )
 {
 	//On cree les deux processus
-	//create_process(STACK_SIZE,funcA, NULL);
-	//create_process(STACK_SIZE,funcB, NULL);	
+	/*create_process(STACK_SIZE,funcA, NULL);
+	create_process(STACK_SIZE,funcB, NULL);	*/
 
 
 	//On cree nos 5 philosophes
@@ -59,10 +59,10 @@ notmain ( void )
 	create_process(STACK_SIZE,philosophe, (void *) 5);
 	
 	//On initialise nos mutex
-	philo_init();
+	//philo_init();
 	
 	//initialise le mtx
-	//mtx_init(mtx);
+	mtx_init(mtx);
 
 	
 	//On lance l'ordonnanceur	

@@ -72,10 +72,8 @@ void sched()
 
 void start_current_process()
 {
-
 	current_pcb->etat= READY;
-	current_pcb->f();
+	current_pcb->f(current_pcb->args);
 	current_pcb->etat= TERMINATED;
 	yield(NULL);
-
 }
