@@ -126,18 +126,21 @@ void mtx_unlock(struct mtx_s* mutex)
 		mutex->compteur += 1;
 		mutex->owner_pcb = 0;
 
-		// on remet le pcb bloqué 
-		struct pcb_s* pcb_blocked_next;
+		if (mutex->blocked_pcb!=NULL) // Si il y un pcb bloqué, on le remet dans la liste des ready 
+		{
+			
+			struct pcb_s* pcb_blocked_next;
 		
-		pcb_blocked_next = mutex->blocked_pcb->next;
+			pcb_blocked_next = mutex->blocked_pcb->next;
 	
-		mutex->blocked_pcb->next = current_pcb->next;
-	
-		current_pcb->next = mutex->blocked_pcb;
-
-		current_pcb->next->etat = READY;
+			//on remet le pcb dans la liste des ready
+			mutex->blocked_pcb->next = current_pcb->next; 
+			current_pcb->next = mutex->blocked_pcb;
+			current_pcb->next->etat = READY;
 		
-		mutex->blocked_pcb = pcb_blocked_next;
+			//on l'enlève de la liste des bloqués
+			mutex->blocked_pcb = pcb_blocked_next;
+		}
 	}
 
 	ENABLE_IRQ();// on réactive les interruptions
